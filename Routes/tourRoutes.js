@@ -1,11 +1,15 @@
 const express = require('express')
 const tourController = require("../Controllers/tourController")   // get all methods 
+
 const router = express.Router()           // This Router is like our middleware 
+
+router.param("id", tourController.checkID)        // we create a parameter specific middleware in our case its only id therefore this middleware only takes id
+                                                  // This will only run for this specific route not for the user bcoz its not mention there  
 
 router
     .route("/")               // It will get the complete address from our middleware anything additional will be given like /:id below
     .get(tourController.getAllTours)
-    .post(tourController.addTour)
+    .post(tourController.checkBody,tourController.addTour)       // Chaining middleware to check condition before moving to next handler function
 
 router
     .route("/:id")
@@ -13,7 +17,7 @@ router
     .patch(tourController.updateTour)
     .delete(tourController.deleteTour)
 
-
+ 
 module.exports = router
 
 
