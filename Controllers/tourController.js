@@ -1,9 +1,47 @@
 const fs = require('fs')         // Just to read files stored in json
 const Tour = require("../Models/tourModel")
-
+const APIFeatures = require("./../Utils/apiFeatures")
 
 
 //We know that creating a tour will give us a promise so from now we use async await instead of then catch
+exports.aliasTopTours = (req, res, next) => {
+  req.query.limit = '5';
+  req.query.sort = '-ratingsAverage,price';
+  req.query.fields = 'name,price,ratingsAverage,summary,difficulty';
+  next();
+};
+
+
+exports.getAllTours = async function(req,res){   
+    try {
+
+        const features = new APIFeatures(Tour.find(), req.query)
+        .filter()
+        .sort()
+        .limitFields()
+        .paginate();
+        const tours = await features.query
+
+        // Sending response
+        res
+        .status(200)
+        .json({
+            status: "Success",
+            results: tours.length,
+            data: { 
+                tours : tours                                                         
+            }                                                                         
+        })                                               
+    } catch(err){
+        res
+            .status(400)
+            .json({
+                status: 'failed',
+                message: err
+                })
+    }
+}
+
 exports.createTour = async function(req,res){
     console.log(req.body)                   
     try {
@@ -16,28 +54,6 @@ exports.createTour = async function(req,res){
                     tours : newTour
                 }
             })
-    } catch(err){
-        res
-            .status(400)
-            .json({
-                status: 'failed',
-                message: err
-                })
-    }
-}
-
-exports.getAllTours = async function(req,res){   
-    try {
-        const tours = await Tour.find()
-        res
-        .status(200)
-        .json({
-            status: "Success",
-            results: tours.length,
-            data: { 
-                tours : tours                                                         
-            }                                                                         
-        })                                               
     } catch(err){
         res
             .status(400)

@@ -70,10 +70,34 @@ const tourSchema = new mongoose.Schema(
       }
 )
 
-const Tour = mongoose.model("Tour", tourSchema)         // This is a model which will be created from the schema design/rules
+const Tour = mongoose.model("Tour", tourSchema)         
+// This is a model which will be created from the schema design/rules
 // The Tour here will act as a collection which will hold all data
 
 module.exports = Tour    // we export our Tour model from here and all functionality of crud will take place in controller
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
