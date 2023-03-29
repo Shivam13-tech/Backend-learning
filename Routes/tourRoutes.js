@@ -15,6 +15,14 @@ router                              //Aliasing a specific route which gets the m
     .get(tourController.aliasTopTours, tourController.getAllTours);
 
 router
+    .route("/tour-stats")
+    .get(tourController.getTourStats)  //Aggregation pipeline demo
+
+router
+    .route('/monthly-plan/:year')
+    .get(tourController.getMonthlyPlan);
+
+router
     .route("/")               // It will get the complete address from our middleware anything additional will be given like /:id below
     .get(tourController.getAllTours)
     .post(tourController.createTour)
