@@ -1,9 +1,9 @@
 const fs = require('fs')         // Just to read files stored in json
 const Tour = require("../Models/tourModel")
 const APIFeatures = require("./../Utils/apiFeatures")
+const catchAsync = require("../Utils/catchAsync")
 
 
-//We know that creating a tour will give us a promise so from now we use async await instead of then catch
 exports.aliasTopTours = (req, res, next) => {
   req.query.limit = '5';
   req.query.sort = '-ratingsAverage,price';
@@ -12,9 +12,22 @@ exports.aliasTopTours = (req, res, next) => {
 };
 
 
-exports.getAllTours = async function(req,res){   
-    try {
+//We know that creating a tour will give us a promise so from now we use async await instead of then catch
+exports.createTour = catchAsync(async function(req,res,next){   //Here we are using a seperate function for not using try catch everywhere just an example
+  const newTour = await Tour.create(req.body)         // Same as doing const newtour = Tour({...})
+  res
+      .status(201)
+      .json({
+          status: "success",
+          data:{
+              tours : newTour
+          }
+      })
+})
 
+
+exports.getAllTours = async function(req,res){     
+    try {
         const features = new APIFeatures(Tour.find(), req.query)
         .filter()
         .sort()
@@ -39,29 +52,7 @@ exports.getAllTours = async function(req,res){
                 status: 'failed',
                 message: err
                 })
-    }
-}
-
-exports.createTour = async function(req,res){
-    console.log(req.body)                   
-    try {
-        const newTour = await Tour.create(req.body)         // Same as doing const newtour = Tour({...})
-        res
-            .status(201)
-            .json({
-                status: "success",
-                data:{
-                    tours : newTour
-                }
-            })
-    } catch(err){
-        res
-            .status(400)
-            .json({
-                status: 'failed',
-                message: err
-                })
-    }
+    }                                             
 }
 
 exports.getTourByID = async function(req,res){                                   
