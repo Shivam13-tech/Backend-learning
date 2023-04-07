@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const dotenv = require("dotenv")
-dotenv.config({path: './config.env'})       // Will read our config info stored and we can use it anywhere in our application
+// dotenv.config({path: './config.env'})       // Will read our config info stored and we can use it anywhere in our application
+dotenv.config({path: './Vars/config.env'}) 
 const app = require("./app")               // We need to read all config before our app so that we can read it everywhere else
 
 

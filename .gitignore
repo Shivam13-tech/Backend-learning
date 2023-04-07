@@ -1,4 +1,5 @@
 /node_modules
+/Vars
 
 # misc
 .DS_Store

@@ -1,7 +1,9 @@
 const express = require('express')
 const userController = require("../Controllers/userController")   // get all methods 
+const authController = require("../Controllers/authController")
 const router = express.Router()
 
+router.post('/signup', authController.signup);       //This doesn't fir the MVC architecture bcoz it just has a single functionality of signup for such routes we don't add them like below
 
 router
     .route("/")
