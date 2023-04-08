@@ -1,6 +1,6 @@
 const express = require('express')
 const tourController = require("../Controllers/tourController")   // get all methods 
-
+const authController = require("../Controllers/authController")
 
 // This will only run for this specific route not for the user bcoz its not mention there 
 const router = express.Router()           // This Router is like our middleware 
@@ -24,7 +24,7 @@ router
 
 router
     .route("/")               // It will get the complete address from our middleware anything additional will be given like /:id below
-    .get(tourController.getAllTours)
+    .get(authController.protect,tourController.getAllTours)
     .post(tourController.createTour)
     // .post(tourController.checkBody,tourController.addTour)       // Chaining middleware to check condition before moving to next handler function
 
