@@ -6,6 +6,8 @@ const router = express.Router()
 router.post('/signup', authController.signup);       //This doesn't fir the MVC architecture bcoz it just has a single functionality of signup for such routes we don't add them like below
 router.post('/login', authController.login);
 
+router.post('/forgotPassword', authController.forgotPassword);
+router.patch('/resetPassword/:token', authController.resetPassword);
 
 router
     .route("/")
