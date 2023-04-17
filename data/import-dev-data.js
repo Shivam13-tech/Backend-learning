@@ -2,7 +2,7 @@ const fs = require('fs');
 const Tour = require("../Models/tourModel");
 const mongoose = require('mongoose')
 const dotenv = require("dotenv")
-dotenv.config({path: '../config.env'})       
+dotenv.config({path: '../Vars/config.env'})       
 
 const DB = process.env.DATABASE.replace('<PASSWORD>', process.env.DATABASE_PASSWORD)        
 
@@ -16,7 +16,7 @@ mongoose.connect(DB, {                 // This will help in connecting our expre
 
 // READ JSON FILE
 const tours = JSON.parse(
-  fs.readFileSync(`${__dirname}/tours-simple.json`, 'utf-8')
+  fs.readFileSync(`${__dirname}/tours.json`, 'utf-8')
 );
 
 // IMPORT DATA INTO DB
