@@ -58,7 +58,7 @@ exports.getAllTours = async function(req,res){
 exports.getTourByID = async function(req,res){                                   
     console.log(req.params.id)                                         // This will provide us with that specific id
     try {
-        const tours = await Tour.findById(req.params.id)
+        const tours = await Tour.findById(req.params.id).populate('reviews')
         res
         .status(200)
         .json({

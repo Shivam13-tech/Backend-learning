@@ -9,6 +9,7 @@ const AppError = require("./Utils/appError")
 const globalErrorhandler = require("./Controllers/errorController")
 const tourRouter = require("./Routes/tourRoutes")
 const userRouter = require("./Routes/userRoutes")
+const reviewRouter = require("./Routes/reviewRoutes")
 
 const app = express()
 
@@ -54,6 +55,10 @@ app.use("/api/v1/tours", tourRouter)        // tourRouter works as our middlewar
 ///////////// User resources //////////////
 
 app.use("/api/v1/users", userRouter)       // userRouter works as our middleware for request response cycle when user perform action
+
+//////////////// Review resources //////////////
+
+app.use("/api/v1/reviews", reviewRouter)        // reviewRouter works as our middleware for request response cycle when user perform action
 
 
 ////////////Unhandled route ///////////
