@@ -2,6 +2,7 @@ const fs = require('fs')         // Just to read files stored in json
 const Tour = require("../Models/tourModel")
 const APIFeatures = require("./../Utils/apiFeatures")
 const catchAsync = require("../Utils/catchAsync")
+const factory = require("../Controllers/handlerFactory")
 
 
 exports.aliasTopTours = (req, res, next) => {
@@ -102,25 +103,26 @@ exports.updateTour = async function(req,res){
     }
 }
 
-exports.deleteTour = async function(req,res){
-    try {
-        const id = req.params.id
-        await Tour.findByIdAndDelete(id)
-        res
-            .status(204)
-            .json({
-                status: "success",
-                data: null
-            })               
-    } catch(err){
-        res
-            .status(400)
-            .json({
-                status: 'failed',
-                message: err
-                })
-    }                               
-}
+exports.deleteTour = factory.deleteOne(Tour)
+// exports.deleteTour = async function(req,res){
+//     try {
+//         const id = req.params.id
+//         await Tour.findByIdAndDelete(id)
+//         res
+//             .status(204)
+//             .json({
+//                 status: "success",
+//                 data: null
+//             })               
+//     } catch(err){
+//         res
+//             .status(400)
+//             .json({
+//                 status: 'failed',
+//                 message: err
+//                 })
+//     }                               
+// }
 
 
 exports.getTourStats = async (req, res) => {
