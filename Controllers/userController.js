@@ -49,41 +49,44 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
   });
   
 
-
-exports.getAllUsers = function(req,res){
-    res
-    .status(500)
-    .json({
-        status: "error",
-        message: "Route still under construction"
-    })
-}
+exports.getAllUsers = factory.getAll(User)
+// exports.getAllUsers = function(req,res){
+//     res
+//     .status(500)
+//     .json({
+//         status: "error",
+//         message: "Route still under construction"
+//     })
+// }
 
 exports.addUser = function(req,res){
     res
     .status(500)
     .json({
         status: "error",
-        message: "Route still under construction"
+        message: "Route still under construction will never work because we use sign up ie /signup contoller"
     })
 }
 
-exports.getUserByID = function(req,res){
-    res
-    .status(500)
-    .json({
-        status: "error",
-        message: "Route still under construction"
-    })
-}
+exports.getUserByID = factory.getOne(User)
+// exports.getUserByID = function(req,res){
+//     res
+//     .status(500)
+//     .json({
+//         status: "error",
+//         message: "Route still under construction"
+//     })
+// }
 
-exports.updateUser = function(req,res){
-    res
-    .status(500)
-    .json({
-        status: "error",
-        message: "Route still under construction"
-    })
-}
+//Simple updates not updating password with this
+exports.updateUser = factory.updateOne(User)
+// exports.updateUser = function(req,res){
+//     res
+//     .status(500)
+//     .json({
+//         status: "error",
+//         message: "Route still under construction"
+//     })
+// }
 
 exports.deleteUser = factory.deleteOne(User);

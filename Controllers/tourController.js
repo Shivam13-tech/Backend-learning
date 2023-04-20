@@ -13,95 +13,99 @@ exports.aliasTopTours = (req, res, next) => {
 };
 
 
+exports.createTour = factory.createOne(Tour)
 //We know that creating a tour will give us a promise so from now we use async await instead of then catch
-exports.createTour = catchAsync(async function(req,res,next){   //Here we are using a seperate function for not using try catch everywhere just an example
-  const newTour = await Tour.create(req.body)         // Same as doing const newtour = Tour({...})
-  res
-      .status(201)
-      .json({
-          status: "success",
-          data:{
-              tours : newTour
-          }
-      })
-})
+// exports.createTour = catchAsync(async function(req,res,next){   //Here we are using a seperate function for not using try catch everywhere just an example
+//   const newTour = await Tour.create(req.body)         // Same as doing const newtour = Tour({...})
+//   res
+//       .status(201)
+//       .json({
+//           status: "success",
+//           data:{
+//               tours : newTour
+//           }
+//       })
+// })
 
+exports.getAllTours = factory.getAll(Tour)
+// exports.getAllTours = async function(req,res){     
+//     try {
+//         const features = new APIFeatures(Tour.find(), req.query)
+//         .filter()
+//         .sort()
+//         .limitFields()
+//         .paginate();
+//         const tours = await features.query
 
-exports.getAllTours = async function(req,res){     
-    try {
-        const features = new APIFeatures(Tour.find(), req.query)
-        .filter()
-        .sort()
-        .limitFields()
-        .paginate();
-        const tours = await features.query
+//         // Sending response
+//         res
+//         .status(200)
+//         .json({
+//             status: "Success",
+//             results: tours.length,
+//             data: { 
+//                 tours : tours                                                         
+//             }                                                                         
+//         })                                               
+//     } catch(err){
+//         res
+//             .status(400)
+//             .json({
+//                 status: 'failed',
+//                 message: err
+//                 })
+//     }                                             
+// }
 
-        // Sending response
-        res
-        .status(200)
-        .json({
-            status: "Success",
-            results: tours.length,
-            data: { 
-                tours : tours                                                         
-            }                                                                         
-        })                                               
-    } catch(err){
-        res
-            .status(400)
-            .json({
-                status: 'failed',
-                message: err
-                })
-    }                                             
-}
+exports.getTourByID = factory.getOne(Tour, {path: 'reviews'})
 
-exports.getTourByID = async function(req,res){                                   
-    console.log(req.params.id)                                         // This will provide us with that specific id
-    try {
-        const tours = await Tour.findById(req.params.id).populate('reviews')
-        res
-        .status(200)
-        .json({
-            status: "success",
-            data: {
-                tours: tours
-            }
-        })
-    } catch(err){
-        res
-            .status(400)
-            .json({
-                status: 'failed',
-                message: err
-                })
-    }
-}
+// exports.getTourByID = async function(req,res){                                   
+//     console.log(req.params.id)                                         // This will provide us with that specific id
+//     try {
+//         const tours = await Tour.findById(req.params.id).populate('reviews')
+//         res
+//         .status(200)
+//         .json({
+//             status: "success",
+//             data: {
+//                 tours: tours
+//             }
+//         })
+//     } catch(err){
+//         res
+//             .status(400)
+//             .json({
+//                 status: 'failed',
+//                 message: err
+//                 })
+//     }
+// }
 
-exports.updateTour = async function(req,res){
-    try {
-        const id = req.params.id
-        const tours = await Tour.findByIdAndUpdate(id, req.body, {
-            new: true,         // This opitional data will help in returning the updated tour
-            runValidators: true  // Strict data type check
-        })                      // Filter by the id and update from the request.body
-        res
-            .status(200)
-            .json({
-            status: "success",
-            data: {
-                tours: tours
-            }
-        })                                        
-    } catch(err){
-        res
-            .status(400)
-            .json({
-                status: 'failed',
-                message: err
-                })
-    }
-}
+exports.updateTour = factory.updateOne(Tour)
+// exports.updateTour = async function(req,res){
+//     try {
+//         const id = req.params.id
+//         const tours = await Tour.findByIdAndUpdate(id, req.body, {
+//             new: true,         // This opitional data will help in returning the updated tour
+//             runValidators: true  // Strict data type check
+//         })                      // Filter by the id and update from the request.body
+//         res
+//             .status(200)
+//             .json({
+//             status: "success",
+//             data: {
+//                 tours: tours
+//             }
+//         })                                        
+//     } catch(err){
+//         res
+//             .status(400)
+//             .json({
+//                 status: 'failed',
+//                 message: err
+//                 })
+//     }
+// }
 
 exports.deleteTour = factory.deleteOne(Tour)
 // exports.deleteTour = async function(req,res){
