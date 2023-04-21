@@ -1,18 +1,28 @@
 const express = require('express')
 const userController = require("../Controllers/userController")   // get all methods 
 const authController = require("../Controllers/authController")
+
 const router = express.Router()
 
+
+//AUTHENTICATION APIS
 router.post('/signup', authController.signup);       //This doesn't fir the MVC architecture bcoz it just has a single functionality of signup for such routes we don't add them like below
 router.post('/login', authController.login);
-
 router.post('/forgotPassword', authController.forgotPassword);
 router.patch('/resetPassword/:token', authController.resetPassword);
 
-router.get('/me', authController.protect,userController.getMe, userController.getUserByID)
-router.patch('/updateMyPassword',authController.protect,authController.updatePassword);
-router.patch('/updateMe', authController.protect, userController.updateMe);
-router.delete('/deleteMe', authController.protect, userController.deleteMe);
+//PROTECTING EVERYTHING
+router.use(authController.protect)     //Bcoz middleware run in sequence This will make sure anything else gets only executed if logged in 
+
+//AUTHENTICATED USER UPDATES + we also remove all authcontroller.protect from this apis bcoz it runs before
+router.get('/me',userController.getMe, userController.getUserByID)
+router.patch('/updateMyPassword',authController.updatePassword);
+router.patch('/updateMe', userController.updateMe);
+router.delete('/deleteMe', userController.deleteMe);
+
+
+// Now only admin will have the power to create / get / update / delete user bcoz this middleware will run 
+router.use(authController.restrictTo('admin'))
 
 router
     .route("/")

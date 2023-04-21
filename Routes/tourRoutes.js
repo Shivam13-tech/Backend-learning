@@ -26,18 +26,18 @@ router
 
 router
     .route('/monthly-plan/:year')
-    .get(tourController.getMonthlyPlan);
+    .get(authController.protect,authController.restrictTo('admin', 'lead-guide', 'guide'),tourController.getMonthlyPlan);
 
 router
     .route("/")               // It will get the complete address from our middleware anything additional will be given like /:id below
-    .get(authController.protect,tourController.getAllTours)
+    .get(tourController.getAllTours)
     .post(tourController.createTour)
     // .post(tourController.checkBody,tourController.addTour)       // Chaining middleware to check condition before moving to next handler function
 
 router
     .route("/:id")
     .get(tourController.getTourByID)
-    .patch(tourController.updateTour)
+    .patch(authController.protect,authController.restrictTo('admin', 'lead-guide'),tourController.updateTour)
     .delete(authController.protect,authController.restrictTo('admin', 'lead-guide'),tourController.deleteTour)
 
 // router // Use merge param instead
