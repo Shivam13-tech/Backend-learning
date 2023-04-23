@@ -34,7 +34,8 @@ const reviewSchema = new mongoose.Schema(
   }
 );
 
-reviewSchema.index({ tour: 1, user: 1 }, { unique: true });
+reviewSchema.index({ tour: 1, user: 1 }, { unique: true });  // So 1 user only gives onew review for a specific tour
+
 
 reviewSchema.pre(/^find/, function(next) {
   // this.populate({         //populating multiple fields
