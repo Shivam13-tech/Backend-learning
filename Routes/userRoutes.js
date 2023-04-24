@@ -2,6 +2,8 @@ const express = require('express')
 const userController = require("../Controllers/userController")   // get all methods 
 const authController = require("../Controllers/authController")
 
+
+
 const router = express.Router()
 
 
@@ -17,7 +19,7 @@ router.use(authController.protect)     //Bcoz middleware run in sequence This wi
 //AUTHENTICATED USER UPDATES + we also remove all authcontroller.protect from this apis bcoz it runs before
 router.get('/me',userController.getMe, userController.getUserByID)
 router.patch('/updateMyPassword',authController.updatePassword);
-router.patch('/updateMe', userController.updateMe);
+router.patch('/updateMe',userController.uploadUserImage,userController.resizeUserPhoto,userController.updateMe);
 router.delete('/deleteMe', userController.deleteMe);
 
 
