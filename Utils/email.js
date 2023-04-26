@@ -90,4 +90,4 @@ module.exports = class Email {
 //   await transporter.sendMail(mailOptions);
 // };
 
-module.exports = sendEmail;
+// module.exports = sendEmail;
