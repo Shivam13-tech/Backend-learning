@@ -6,6 +6,7 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 
 const compression = require("compression")
+const cors = require("cors")
 const AppError = require("./Utils/appError")
 const globalErrorhandler = require("./Controllers/errorController")
 const tourRouter = require("./Routes/tourRoutes")
@@ -15,6 +16,11 @@ const bookingRouter = require("./Routes/bookingRoutes")
 
 const app = express()
 
+///Implement CORS///
+app.use(cors())
+app.options('*', cors())
+
+///////////////////
 app.use(helmet());           //Securing http headers
 
 const limiter = rateLimit({
@@ -49,7 +55,7 @@ app.use(
         'price'
       ]
     })
-  );
+  ); 
 
 
 ///////////////// Compression //////////////
