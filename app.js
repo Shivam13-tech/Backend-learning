@@ -5,6 +5,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 
+const compression = require("compression")
 const AppError = require("./Utils/appError")
 const globalErrorhandler = require("./Controllers/errorController")
 const tourRouter = require("./Routes/tourRoutes")
@@ -49,6 +50,11 @@ app.use(
       ]
     })
   );
+
+
+///////////////// Compression //////////////
+
+app.use(compression())
 //////////////// Tour resources //////////////
 
 app.use("/api/v1/tours", tourRouter)        // tourRouter works as our middleware for request response cycle when user perform action
